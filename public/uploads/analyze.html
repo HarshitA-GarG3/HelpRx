@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script/angular.min.js"></script>
+    <script>
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope,$http){
+                $scope.jsonArray;
+                $scope.jsonArray2;
+                $scope.fetchCities=function()
+                {  
+
+                    var url="/get-angular-finder-cities";
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                            alert(JSON.stringify(response.data));
+                            $scope.jsonArray=response.data;
+
+                        }
+                     function fail(response)
+                        {
+                                alert(response.data);
+                        } 
+
+                }
+
+                $scope.fetchMeds=function()
+                {  
+
+                    var url="/get-angular-finder-med";
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                            alert(JSON.stringify(response.data));
+                            $scope.jsonArray2=response.data;
+
+                        }
+                     function fail(response)
+                        {
+                                alert(response.data);
+                        } 
+
+                }
+
+
+
+                $scope.cityObj="";
+                $scope.medObj="";
+                $scope.doShowCity=function()
+                {
+                    alert($scope.cityObj.city);
+                    var url="/get-angular-cities"
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                    {
+                        alert(JSON.stringify(response.data));
+                        
+                    }
+
+                    function fail(response)
+                    {
+                        alert(response.data);
+                    }
+                }
+
+                $scope.doShowSelMed=function()
+                {
+                    alert($scope.medObj.med);
+                    var url="/get-angular-med"
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                    {
+                        alert(JSON.stringify(response.data));
+                        
+                    }
+
+                    function fail(response)
+                    {
+                        alert(response.data);
+                    }
+                }
+        })
+    </script>
+</head>
+<body ng-app="myModule" ng-controller="myController" ng-init="fetchCities();fetchMeds();">
+     <center>  
+        <div class="container">
+     <div class="col-md-6">City</div>  
+         <select ng-options="obj.city  for obj in jsonArray"  ng-model="cityObj" ng-change="doShowCity();" >
+              <option value="">Select</option>
+          </select>
+        
+         <div  class="col-md-6">Medicines</div>  
+         <select ng-options="obj2.med  for obj2 in jsonArray2"  ng-model="medObj" ng-change="doShowSelMed();" >
+            <option value="">Select</option>
+        </select>
+      
+         <table width="800" border="1">
+                <tr>
+                    <th>Sr.No</th> <th>Email id</th> <th>Password</th><th>Pic</th><th>Prev</th><th>Operations</th>
+                    <tr ng-repeat="obj in jsonArray">
+                        <td>{{$index+1}}</td>
+                        <td>{{obj.email}}</td>
+                        <td>{{obj.password}}</td>
+                        <td>{{obj.picname}}</td>
+                        <td align="center">
+                            <img src="uploads/{{obj.picname}}" alt="" width="100" height="100">
+                        </td>
+                        <td align="center">
+                                 <input type="button" value="Delete" ng-click="doDelete(obj.email);">
+                                <input type="button" value="Block" ng-click="doBlock(obj.email);">
+                                <input type="button" value="Resume" ng-click="doResume(obj.email);">
+                        </td>
+                    </tr>
+                </tr>
+
+         </table>
+         <hr>
+     
+        </div>
+    </center>
+    
+</body>
+</html>
