@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Users</title>
+    <script src="script/angular.min.js"></script>
+    <script>
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope,$http)
+        {   
+            $scope.jsonArray;
+            $scope.doFetch=function()
+                {
+                    var url="/get-angular-all-records";
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                            //alert(JSON.stringify(response.data));
+                            $scope.jsonArray=response.data;
+
+                        }
+                     function fail(response)
+                        {
+                                alert(response.data);
+                        }   
+                }
+                
+
+                //======================================================
+                $scope.doBlock=function(emailid)
+                {
+                    var url="/get-angular-block-records?emailKuch="+emailid;
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                            //alert(JSON.stringify(response.data));
+                           // $scope.jsonArray=response.data;
+                           alert(response.data);
+                        }
+                     function fail(response)
+                        {
+                                alert(response.data);
+                        }   
+                }
+                $scope.doResume=function(emailid)
+                {
+                    var url="/get-angular-resume-records?emailKuch="+emailid;
+                    $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                           // alert(JSON.stringify(response.data));
+                           // $scope.jsonArray=response.data;
+                           alert(response.data);
+                        }
+                     function fail(response)
+                        {
+                                alert(response.data);
+                        }   
+                }
+       
+       
+        })
+       
+           </script>
+</head>
+<body   ng-app="myModule"  ng-controller="myController">
+<center>
+
+    <input type="button" value="fetch-Records"  ng-click="doFetch()">
+
+ <table class="table" border="all"  width="800">
+    <thead>
+      <tr>
+        <th scope="col">Sr.No</th>
+        <th scope="col">Email id</th>
+        <th scope="col">DOS</th>
+        <th scope="col">Status</th>
+        <th scope="col">Type</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   ng-repeat="obj in jsonArray">
+        <th scope="row">{{$index+1}}</th>
+        <td>{{obj.emailid}}</td>
+        <td>{{obj.dos}}</td>
+        <td>{{obj.status}}</td>
+        <td>{{obj.type}}</td>
+        <td align="center">
+          <input type="button" value="Block" ng-click="doBlock(obj.emailid);">
+          <input type="button" value="Resume" ng-click="doResume(obj.emailid);">
+  </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+</center>
+    
+</body>
+</html>

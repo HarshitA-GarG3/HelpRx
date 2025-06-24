@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Users</title>
+  <script src="script/angular.min.js"></script>
+  <script>
+    var module = angular.module("myModule", []);
+    module.controller("myController", function ($scope, $http) {
+      $scope.jsonArray;
+      $scope.Emailtxt;
+      $scope.doFetch = function () {
+        var url = "/get-angular-med-records?txtemail=" + $scope.Emailtxt;
+        $http.get(url).then(done, fail);
+        function done(response) {
+          $scope.jsonArray = response.data;
+          alert(JSON.stringify($scope.jsonArray = response.data));
+        }
+        function fail(response) {
+          alert(response.data);
+        }
+      }
+      //-------------
+      $scope.doDelete = function (srno) {
+        if (confirm("R U Sure?") == false)
+          return;
+        var url = "/do-angular-delete-med?srno=" +srno;//+"&pwd="+pwdkuch;
+        $http.get(url).then(done, fail);
+        function done(response) {
+          alert(response.data);
+          $scope.doFetch();
+
+        }
+        function fail(response) {
+          alert(response.data);
+        }
+
+      }
+
+
+
+    })
+
+  </script>
+</head>
+
+<body ng-app="myModule" ng-controller="myController">
+  <center><br>
+    <h1>Medicine Manager</h1>
+    Email id <input type="email" ng-model="Emailtxt" autofocus>
+    <input type="button" value="Get Records" id="btngetRecords" ng-click="doFetch()">
+
+    <table class="table" border="all" width="800">
+      <thead>
+        <tr>
+          <th scope="col">Sr.No</th>
+          <th scope="col">Med-Name</th>
+          <th scope="col">Expiry Date</th>
+          <th scope="col">Packing</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="obj in jsonArray">
+          <th>{{$index+1}}</th>
+          <td>{{obj.med}}</td>
+          <td>{{obj.expdate}}</td>
+          <td>{{obj.packing}}</td>
+          <td>{{obj.quantity}}</td>
+          <td align="center">
+            <input type="button" value="Delete" ng-click="doDelete(obj.srno);">
+
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+
+  </center>
+
+</body>
+
+</html>

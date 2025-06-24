@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Card Angular</title>
+    <script src="script/angular.min.js"></script>
+    <script>
+ var module=angular.module("myModule",[]);
+ module.controller("myController",function($scope)
+ {   
+    $scope.J="";
+    $scope.C="";
+    $scope.D="";
+    $scope.total;
+    $scope.per;
+    $scope.res;
+    $scope.doTotal=function()
+    {
+          $scope.total=parseInt($scope.J)+parseInt($scope.C)+parseInt($scope.D);
+    }
+    $scope.doPer=function()
+    {
+        $scope.per=$scope.total/300*100;
+    }
+    $scope.doRes=function()
+    {
+       if($scope.per>=60)
+       $scope.res="Passed Hurrayyyy"
+       else
+       $scope.res="Better Luck Next Time";
+    }
+
+
+ })
+
+    </script>
+</head>
+<body    ng-app="myModule"  ng-controller="myController">
+ <center><h1>Marks Card</h1><br><br>
+Java <input type="text" ng-model="J"  autofocus >
+<br><br><br>
+C++ <input type="text" ng-model="C">
+<br><br><br>
+DSA <input type="text" ng-model="D">
+<br><br><br>
+<input type="button"  value="Total"  ng-click="doTotal();">
+<input type="button"  value="Percentage"  ng-click="doPer();">
+<input type="button"  value="Result"  ng-click="doRes();">
+<p>Total={{total}}</p>
+<p>Percentage={{per}}</p>
+<p>Result={{res}}</p>
+ </center>   
+</body>
+</html>

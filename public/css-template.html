@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Document</title>
+   <style>
+    body{
+        background-image: url(pics/bgok.jpg);
+    }
+    *{
+        margin: 0px;
+    }
+    #outer-div
+    {
+        width: 1000px; height: 700px; background-color: white;
+        margin: auto;
+    }
+    #title-div{
+        width: inherit; height: 60px; background-color: greenyellow;
+    } 
+    #logo{
+        width: 50px; height: 50px; background-image: url(pics/logo1.jpg); 
+        background-size: contain; margin-left: 20px; margin-top: 5px;
+        float: left; 
+    }   
+    .sm{
+        width: 50px; height: 50px; 
+        /* border: 1px solid black; */
+         float: right;
+        margin-right: 10px;
+        margin-top: 3px;
+        border-radius: 50%;
+
+        
+    }
+    .sm1{
+        background-image: url(pics/fb.png);
+        background-size: contain;
+    }
+    .sm2{
+        background-image: url(pics/insta.jpg);
+        background-size: contain;
+    }
+    .sm:hover{
+        transform: scale(.7);
+        transition: ease all 1s;;
+    }
+    #menu-div
+    {
+        width: inherit; height: 43px; background-color: black;
+    }
+    #menu-div ol{
+        list-style: none;
+        width: inherit;
+       
+    }
+    #menu-div li{
+        float:left ;
+        background-color:white;
+        padding: 10px 20px 10px 20px;
+        border: .5px black solid;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    #menu-div li:hover
+    {
+        background-color: black;
+        color: white;
+    }
+    #pic-div{
+        width: inherit;
+        height: 200px;
+        background-image: url(pics/ac.png);
+    }
+    .title{
+        font-size: 29px; margin-top: 10px; float: left; 
+        margin-left: 20px;
+        
+    }
+    .title:hover
+    {
+        text-shadow: 5px 5px 5px black;
+    }
+    #our-products
+    {
+        width: 1000px;  background-color: greenyellow;
+        line-height: 40px;
+    }
+    #cards-cover
+    {
+        width: inherit; height: 290px; background-color: gainsboro;
+        padding-top: 10px;
+    }
+    #inner-cover
+    {
+        width:800px ; height: 280px; background-color: white;
+        margin: auto; 
+    }
+    .card{
+        width: 240px; height: 250px; float: left; background-color: greenyellow;
+        margin-top: 15px;
+    }
+   
+   </style>
+</head>
+<body>
+    <div id="outer-div">
+        <div id="title-div">
+            <div id="logo"></div>
+            <div class="title">
+                www.realServices.com
+            </div>
+            <div class="sm sm1"></div>
+            <div class="sm sm2"></div>
+        </div>
+        <div id="menu-div">
+                <ol>
+                    <li>Home</li>
+                    <li>Our Products</li>
+                    <li>Reach Us</li>
+                    <li>Contact Us</li>
+                    <li>Our Team</li>
+                </ol>
+        </div>
+        <div id="pic-div"></div>
+        <div id="our-products">
+                <center>
+                    <h2>Our Products</h2>
+                </center>
+        </div>
+        
+            <div id="cards-cover">
+                <div id="inner-cover">
+                   <div class="card" style="margin-left:25px">c1</div>
+                   <div class="card" style="margin-left: 10px; margin-right: 10px ;">c2</div>
+                   <div class="card">c3</div>
+                </div>
+            </div>
+        
+    </div>
+</body>
+</html>

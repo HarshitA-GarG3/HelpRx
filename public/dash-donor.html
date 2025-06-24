@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor-DashBoard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function()
+    {   
+
+      var au=localStorage.getItem("activeKuch");
+      alert(au);
+      $("#Welcome").html(au);
+      $("#doLogout").click(function()
+        {
+          localStorage.removeItem("activeKuch");
+         window.location.replace("/index.html");
+          return;
+          
+        })
+      $("#btnUpdate").click(function()
+     {
+
+          var PEmail = $("#Form-email").val();
+          var Oldpass = $("#Form-opass").val();
+          var Newpass = $("#Form-npass").val();
+          var Conpass = $("#Form-con").val();
+          if(Conpass==Newpass)
+          {
+          var obj = {
+            type: "get",
+            url: "/change-password",
+            data: {
+              Email: PEmail,
+              oldpass: Oldpass,
+              newpass: Newpass
+
+            }
+          }
+
+          $.ajax(obj).done(function (respJsonAry) {
+
+            alert(respJsonAry);
+          }).fail(function (kuchErr) {
+            alert(kuchErr.toString());
+          });
+          }
+          else
+          alert("Confirm password and new password are not same");
+        })
+      
+        });
+      
+
+
+
+
+
+
+
+
+
+
+     
+  </script> 
+ <style>
+  .card{
+    margin-right: 10px;
+  }
+ </style>
+ 
+ 
+  </head>
+<body >
+ <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <img src="uploads/logo.webp" alt=""  width="50" style="float:left;">
+      <a class="navbar-brand" href="#" ><font color="red" size="5"><b>h</b></font>elp<b><font color="red" size="5">R</font></b>x</a>
+    </div>
+
+    
+  <button type="button" class="--bs-body-bg  --bs-body-bg-rgb"" id="doLogout" data-bs-toggle="modal"
+    data-bs-target="#myModal" style="margin-left: 10px; margin-right: 10px; width:80px">
+    Logout
+  </button>
+  <br><br>
+
+  </nav>-->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container">
+    <div style="display: flex; align-items: center;">
+      <img src="uploads/logo.webp" alt="" width="50" style="margin-right: 10px;">
+      <a class="navbar-brand" href="#" style="color: red; font-size: 20px; font-weight: bold; text-decoration: none;">
+        <span style="color: red; font-size: 20px; font-weight: bold;">h</span>elp<span style="color: red; font-size: 20px;">R</span>x
+      </a>
+    </div>
+  </div>
+  <button type="button" class="--bs-body-bg --bs-body-bg-rgb" id="doLogout" data-bs-toggle="modal" data-bs-target="#myModal" style="margin-left: 10px; margin-right: 10px; width: 80px;">
+    Logout
+  </button>
+  <br><br>
+</nav>
+
+  <h2>Welcome: <span id="Welcome">*</span></h2>
+    <center><br><br><div  class="container">
+      <div class="col-md-12"><h1>Donor Dashboard</h1></div>
+      <br><br>
+        <div class="card col-md-3 " style="width: 18rem; float: left;height: 27rem;">
+            <img src="uploads/users4.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Profile</h5>
+              <p class="card-text"></p>
+              <a href="profile-donor.html" class="btn btn-primary">PROFILE</a>
+            </div>
+          </div>
+          <div class="card col-md-3" style="width: 18rem;float: left;height: 27rem; ">
+            <img src="uploads/medicine donor.avif"class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">AVAIL-MEDICINE</h5>
+              <p class="card-text"></p>
+              <a href="avail-med.html" class="btn btn-primary">AVAILABLE MEDICINE</a>
+            </div>
+          </div>
+          <div class="card col-md-3" style="width: 18rem;float: left;height: 27rem; ">
+            <img src="uploads/da1f9e1050f1cc2cccc390a8c1b5aa40.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Medicine Manager</h5>
+              <p class="card-text"></p>
+              <a href="med-manager.html" class="btn btn-primary">Med-Man</a>
+            </div>
+          </div>
+          <div class="card col-md-3" style="width: 18rem; float: left;height: 27rem;">
+            <img src="uploads/settings 2.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Settings</h5>
+              <p class="card-text"></p>
+             <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+Settings
+</button>
+
+            </div>
+          </div>
+         
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Settings</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="formGroupExampleInput2" class="form-label">Email ID</label>
+          <input type="email" class="form-control" value="" id="Form-email" name="txtemail" placeholder="Another input placeholder">
+        </div>
+        <div class="mb-3">
+          <label for="formGroupExampleInput2" class="form-label">Old Password</label>
+          <input type="password" class="form-control" value="" id="Form-opass" name="txtold" placeholder="Another input placeholder">
+        </div>
+        <div class="mb-3">
+          <label for="formGroupExampleInput2" class="form-label">New Password</label>
+          <input type="password" class="form-control" value="" id="Form-npass" name="new" placeholder="Another input placeholder">
+        </div>
+        <label for="formGroupExampleInput2" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" value="" id="Form-con" name="con" placeholder="Another input placeholder">
+        </div>
+        <!-- <div class="mb-3">
+          <label for="formGroupExampleInput2" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" value="" id="txtcon" name="txtcon" placeholder="Another input placeholder">
+        </div>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"id="btnUpdate">Update</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+    </center>
+  </div>
+</body>
+</html>

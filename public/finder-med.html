@@ -1,0 +1,156 @@
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finder-Med</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="script/angular.min.js"></script> 
+    <script>
+      var module = angular.module("Mymodule",[]);
+      module.controller("Mycontroller",function($scope,$http)
+      {
+        $scope.cityJSONAry;
+        $scope.jsoncity;
+        $scope.fetchCities=function()
+        {
+          var url="/fetch-city-donors";
+          $http.get(url).then(done,fail);
+          function done(resp)
+          {
+            // alert(JSON.stringify(resp.data));
+            $scope.jsoncity=resp.data;
+          } 
+          function fail(resp)
+          {
+            alert(resp.data);
+          }
+        }
+        $scope.selcity=function()
+        {
+          //  alert($scope.cityJSONAry.email);
+        }
+        //===============================
+        $scope.jsonmed;
+        $scope.medJSONAry;
+        $scope.selmed=function()
+        {
+          // alert($scope.medJSONAry.med);
+        }
+        $scope.fetchMed=function()
+        {
+          var url="/fetch-meds-donated-by-donors";
+          $http.get(url).then(done,fail);
+          function done(resp)
+          {
+            // alert(JSON.stringify(resp.data));
+            $scope.jsonmed=resp.data;
+          } 
+          function fail(resp)
+          {
+            alert(resp.data);
+          }
+        }
+
+        $scope.fetchDonors=function()    // object     // med field ka naam hai
+            {                               //variable ka name hai
+                var url="/fetch-donors?medKuch="+$scope.medJSONAry.med+"&cityKuch="+$scope.cityJSONAry.city;
+                alert(url);
+                $http.get(url).then(done,fail);
+                    function done(response)
+                        {
+                          
+                            alert(JSON.stringify(response.data));
+                            $scope.JsonArr3=response.data;
+
+                        }
+                     function fail(response)
+                        {
+                            alert(response.data);
+                        }
+            }
+
+            $scope.selOneObj;
+                    $scope.doShowOne=function(selIndex)
+                    {
+                            $scope.selOneObj=$scope.JsonArr3[selIndex];
+                    }
+      });
+    </script>
+  </head>
+  <body ng-app="Mymodule" ng-controller="Mycontroller" ng-init="fetchCities();fetchMed();">
+   
+    <nav class="navbar navbar-expand-lg">
+        <div class="col-md-12">
+
+            <a class="navbar-brand" href="#">
+                <span class="text-black" style="font-size: larger;"></span>
+            </a>
+        </div>
+    </nav>
+
+    <div>
+        <h1 class="offset-md-5 mb-4">Medicine Finder</h1>
+        <div class="row">
+            <div class="col-md-3 mt-3 offset-md-3">
+            <label class="form-label">City</label>
+            <select class="form-select" ng-options="obj.city for obj in jsoncity" ng-model="cityJSONAry" ng-change="selcity();">
+                <option selected>Select</option>
+              </select>
+            </div>
+            <div class="col-md-3 mt-3 ms-4">
+                <label class="form-label">Medicines List</label>
+            <select class="form-select" ng-options="obj.med for obj in jsonmed" ng-model="medJSONAry" ng-change="selmed();">
+                <option selected>Select</option>
+              </select>
+            </div>
+        </div><br><br><br><br><center>
+        <div class="col-md-12 " >
+          <input type="button" class="btn btn-outline-success" value="GET DONORS" ng-click="fetchDonors();" style="width: 300px "></div>
+        </center>
+        <div class="row">
+            <div class="col-md-3" ng-repeat="obj in JsonArr3">
+                <div class="card" >
+                    <img src="uploads/needy.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Name:</b>{{obj.name}}</h5>
+                      <h5 class="card-title"><b>Contact-No.:</b>{{obj.mobile}}</h5>
+                      <h5 class="card-title"><b>Avail Hours:</b>{{obj.hours}}</h5>
+                      <a href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#modalDetails"  ng-click="doShowOne($index);">Details</a>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal fade" tabindex="-1" id="modalDetails" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+       
+          
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <img src="uploads/{{selOneObj.picname}}" width="300" height="300" alt="">
+            <p>
+              <h5 class="modal-title"><b>Emailid:</b>{{selOneObj.emailid}}</h5><br>
+              <h5 class="modal-title"><b>Name:</b>{{selOneObj.name}}</h5><br>
+              <h5 class="modal-title"><b>Mobile:</b>{{selOneObj.mobile}}</h5><br>
+              <h5 class="modal-title"><b>Address:</b>{{selOneObj.address}}</h5><br>
+              <h5 class="modal-title"><b>City:</b>{{selOneObj.city}}</h5><br>
+              <h5 class="modal-title"><b>Proof:</b>{{selOneObj.proof}}</h5><br>
+              <h5 class="modal-title"><b>Hours:</b>{{selOneObj.hours}}</h5><br>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+    </html>
